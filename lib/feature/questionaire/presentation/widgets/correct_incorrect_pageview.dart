@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:measureap/questionaire/domain/entity/question.dart';
-import 'package:measureap/questionaire/presentation/widgets/correct_incorrect_option_card.dart';
-import 'package:measureap/questionaire/presentation/widgets/questionnaire_text_widgets.dart';
+import 'package:measureap/feature/questionaire/domain/entity/question.dart';
+import 'package:measureap/feature/questionaire/presentation/widgets/correct_incorrect_option_card.dart';
+import 'package:measureap/feature/questionaire/presentation/widgets/questionnaire_text_widgets.dart';
 
-import '../../../core/widgets/gaps.dart';
+import '../../../../core/widgets/gaps.dart';
 import '../questionnaire_bloc.dart';
 
 class CorrectIncorrectPageview extends StatefulWidget {

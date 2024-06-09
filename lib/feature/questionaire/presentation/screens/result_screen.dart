@@ -3,9 +3,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:measureap/core/constants/string_constants.dart';
 import 'package:measureap/core/theme/app_colors.dart';
 import 'package:measureap/core/theme/styles_manager.dart';
-import 'package:measureap/questionaire/presentation/widgets/custom_percent_indicator.dart';
-import 'package:measureap/questionaire/presentation/widgets/questionnaire_text_widgets.dart';
-import '../../../core/widgets/gaps.dart';
+import 'package:measureap/feature/questionaire/presentation/widgets/custom_percent_indicator.dart';
+import 'package:measureap/feature/questionaire/presentation/widgets/questionnaire_text_widgets.dart';
+import '../../../../core/widgets/gaps.dart';
 import '../questionnaire_bloc.dart';
 
 class ResultScreen extends StatefulWidget {

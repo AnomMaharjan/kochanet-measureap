@@ -3,9 +3,9 @@ import 'package:measureap/core/theme/app_colors.dart';
 import 'package:measureap/core/theme/styles_manager.dart';
 import 'package:measureap/core/widgets/custom_button.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:measureap/questionaire/presentation/questionnaire_bloc.dart';
+import 'package:measureap/feature/questionaire/presentation/questionnaire_bloc.dart';
 
-import '../../../core/routes/routes.dart';
+import '../../../../core/routes/routes.dart';
 
 class QuestionnaireButtons extends StatelessWidget {
   const QuestionnaireButtons({super.key});

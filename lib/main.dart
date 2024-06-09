@@ -7,9 +7,9 @@ import 'package:measureap/feature/assessments/presentation/screens/new_assessmen
 import 'package:measureap/feature/dashboard/presentation/screens/cubit/dashboard_cubit.dart';
 import 'package:measureap/feature/dashboard/presentation/screens/dashboard_screen.dart';
 import 'package:measureap/feature/home/presentation/screens/home_screen.dart';
-import 'package:measureap/questionaire/presentation/questionnaire_bloc.dart';
-import 'package:measureap/questionaire/presentation/screens/questionnaire_screen.dart';
-import 'package:measureap/questionaire/presentation/screens/result_screen.dart';
+import 'package:measureap/feature/questionaire/presentation/questionnaire_bloc.dart';
+import 'package:measureap/feature/questionaire/presentation/screens/questionnaire_screen.dart';
+import 'package:measureap/feature/questionaire/presentation/screens/result_screen.dart';
 import 'core/dependency_injectors/dependency_injectors.dart';
 import 'core/firebase/firebase_options.dart';
 import 'core/firebase/firebase_service.dart';

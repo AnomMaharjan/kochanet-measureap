@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:measureap/questionaire/presentation/widgets/questionnaire_buttons.dart';
+import 'package:measureap/feature/questionaire/presentation/widgets/questionnaire_buttons.dart';
 
 import '../../domain/entity/question.dart';
 

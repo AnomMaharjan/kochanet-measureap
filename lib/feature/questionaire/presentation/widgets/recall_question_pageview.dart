@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:measureap/questionaire/presentation/enums/question_type_enums.dart';
-import 'package:measureap/questionaire/presentation/widgets/questionnaire_text_widgets.dart';
+import 'package:measureap/feature/questionaire/presentation/enums/question_type_enums.dart';
+import 'package:measureap/feature/questionaire/presentation/widgets/questionnaire_text_widgets.dart';
 
 class RecallQuestionPageview extends StatelessWidget {
   const RecallQuestionPageview({super.key});
