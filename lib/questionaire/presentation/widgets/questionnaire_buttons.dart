@@ -39,8 +39,11 @@ class QuestionnaireButtons extends StatelessWidget {
                     : null,
               ),
             ),
+          const SizedBox(
+            width: 10,
+          ),
           Flexible(
-            flex: 5,
+            flex: state.currentPage == state.questions.length ? 2 : 5,
             child: _NextButton(
                 title: state.currentPage == state.questions.length
                     ? 'Print'
@@ -53,6 +56,9 @@ class QuestionnaireButtons extends StatelessWidget {
                     Navigator.pushReplacementNamed(
                         context, AppRoutes.dashboard);
                   } else {
+                    bloc.add(
+                      AnswerQuestion(state.currentPage, []),
+                    );
                     bloc.add(
                       AnswerQuestion(state.currentPage, [0, 1]),
                     );

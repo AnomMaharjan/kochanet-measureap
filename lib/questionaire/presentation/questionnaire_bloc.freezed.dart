@@ -611,6 +611,7 @@ abstract class AnswerQuestion implements QuestionnaireEvent {
 
 /// @nodoc
 mixin _$QuestionnaireState {
+  bool get isLoading => throw _privateConstructorUsedError;
   int get currentPage => throw _privateConstructorUsedError;
   List<Map<String, dynamic>>? get userAnswers =>
       throw _privateConstructorUsedError;
@@ -628,7 +629,8 @@ abstract class $QuestionnaireStateCopyWith<$Res> {
       _$QuestionnaireStateCopyWithImpl<$Res, QuestionnaireState>;
   @useResult
   $Res call(
-      {int currentPage,
+      {bool isLoading,
+      int currentPage,
       List<Map<String, dynamic>>? userAnswers,
       List<Question> questions});
 }
@@ -646,11 +648,16 @@ class _$QuestionnaireStateCopyWithImpl<$Res, $Val extends QuestionnaireState>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? isLoading = null,
     Object? currentPage = null,
     Object? userAnswers = freezed,
     Object? questions = null,
   }) {
     return _then(_value.copyWith(
+      isLoading: null == isLoading
+          ? _value.isLoading
+          : isLoading // ignore: cast_nullable_to_non_nullable
+              as bool,
       currentPage: null == currentPage
           ? _value.currentPage
           : currentPage // ignore: cast_nullable_to_non_nullable
@@ -676,7 +683,8 @@ abstract class _$$QuestionnaireStateImplCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {int currentPage,
+      {bool isLoading,
+      int currentPage,
       List<Map<String, dynamic>>? userAnswers,
       List<Question> questions});
 }
@@ -692,11 +700,16 @@ class __$$QuestionnaireStateImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? isLoading = null,
     Object? currentPage = null,
     Object? userAnswers = freezed,
     Object? questions = null,
   }) {
     return _then(_$QuestionnaireStateImpl(
+      isLoading: null == isLoading
+          ? _value.isLoading
+          : isLoading // ignore: cast_nullable_to_non_nullable
+              as bool,
       currentPage: null == currentPage
           ? _value.currentPage
           : currentPage // ignore: cast_nullable_to_non_nullable
@@ -717,13 +730,17 @@ class __$$QuestionnaireStateImplCopyWithImpl<$Res>
 
 class _$QuestionnaireStateImpl extends _QuestionnaireState {
   const _$QuestionnaireStateImpl(
-      {this.currentPage = 0,
+      {this.isLoading = false,
+      this.currentPage = 0,
       final List<Map<String, dynamic>>? userAnswers,
       final List<Question> questions = const []})
       : _userAnswers = userAnswers,
         _questions = questions,
         super._();
 
+  @override
+  @JsonKey()
+  final bool isLoading;
   @override
   @JsonKey()
   final int currentPage;
@@ -748,7 +765,7 @@ class _$QuestionnaireStateImpl extends _QuestionnaireState {
 
   @override
   String toString() {
-    return 'QuestionnaireState(currentPage: $currentPage, userAnswers: $userAnswers, questions: $questions)';
+    return 'QuestionnaireState(isLoading: $isLoading, currentPage: $currentPage, userAnswers: $userAnswers, questions: $questions)';
   }
 
   @override
@@ -756,6 +773,8 @@ class _$QuestionnaireStateImpl extends _QuestionnaireState {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$QuestionnaireStateImpl &&
+            (identical(other.isLoading, isLoading) ||
+                other.isLoading == isLoading) &&
             (identical(other.currentPage, currentPage) ||
                 other.currentPage == currentPage) &&
             const DeepCollectionEquality()
@@ -767,6 +786,7 @@ class _$QuestionnaireStateImpl extends _QuestionnaireState {
   @override
   int get hashCode => Object.hash(
       runtimeType,
+      isLoading,
       currentPage,
       const DeepCollectionEquality().hash(_userAnswers),
       const DeepCollectionEquality().hash(_questions));
@@ -781,11 +801,14 @@ class _$QuestionnaireStateImpl extends _QuestionnaireState {
 
 abstract class _QuestionnaireState extends QuestionnaireState {
   const factory _QuestionnaireState(
-      {final int currentPage,
+      {final bool isLoading,
+      final int currentPage,
       final List<Map<String, dynamic>>? userAnswers,
       final List<Question> questions}) = _$QuestionnaireStateImpl;
   const _QuestionnaireState._() : super._();
 
+  @override
+  bool get isLoading;
   @override
   int get currentPage;
   @override

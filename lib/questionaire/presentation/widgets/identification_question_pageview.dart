@@ -29,6 +29,7 @@ class IdentificationQuestionPageview extends StatelessWidget {
             child: IdentificationQuestionOptionCard(
               answer: question.options![index],
               imageUrl: question.images![index],
+              index: index,
             ),
           ),
         ),

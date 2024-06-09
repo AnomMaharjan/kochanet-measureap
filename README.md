@@ -1,16 +1,55 @@
-# measureap
+# MeasureAp
 
-A new Flutter project.
+This Flutter application implements Clean Architecture with Dependency Injection using `get_it`, state management with `flutter_bloc`, and Firebase Cloud Firestore as a backend for managing collections of `cognitive_status`, `applicable_measures`, and `patients`.
+
+## Table of Contents
+
+- [Getting Started](#getting-started)
+- [Dependencies](#dependencies)
+- [Configuration](#configuration)
+
 
 ## Getting Started
 
-This project is a starting point for a Flutter application.
+Follow these instructions to get the project up and running on your local machine.
 
-A few resources to get you started if this is your first Flutter project:
+### Prerequisites
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+- [Flutter SDK](https://flutter.dev/docs/get-started/install)
+- [Firebase Project](https://firebase.google.com/)
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+### Installation
+
+1. Clone the repository:
+
+```bash
+git clone https://github.com/your-username/your-repo.git
+cd your-repo
+
+2. Install dependencies:
+flutter pub get
+
+##  Dependencies
+- get_it: Dependency Injection
+- flutter_bloc: State Management
+- firebase_core: Firebase Core
+- cloud_firestore: Firebase Cloud Firestore
+
+## Usage
+- Run the app:
+    flutter run
+
+## Assumptions Made
+Model for new assessment:
+
+- cognitive_statuses
+  - {cognitiveStatusId}
+  - name: "Cognitive Status 1"
+- measures
+  - {measureId}
+  - name: "Memory Test"
+  - cognitiveStatusId: "{cognitiveStatusId}"
+- patients
+  - {patientId}
+  - name: "John Doe"
+  - measureId: "{measureId}"

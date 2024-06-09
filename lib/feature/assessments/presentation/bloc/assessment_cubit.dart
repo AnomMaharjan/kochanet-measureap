@@ -5,28 +5,102 @@ import 'package:measureap/feature/assessments/domain/entity/cognitive_status_ent
 import 'package:measureap/feature/assessments/domain/entity/patient_entity.dart';
 import '../../domain/entity/assessment_entity.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
+import '../../domain/repository/assessments_repository.dart';
 
 part 'assessment_state.dart';
 
 part 'assessment_cubit.freezed.dart';
 
 class AssessmentCubit extends Cubit<AssessmentState> {
-  AssessmentCubit() : super(const AssessmentState()) {
+  final AssessmentRepository repository;
+  AssessmentCubit(this.repository) : super(const AssessmentState()) {
     fetchRecentAssessment();
   }
 
+  clearAssessmentModel() {
+    emit(state.copyWith(
+        cognitiveStatus: null,
+        measures: null,
+        patientName: null,
+        cognitiveStatuses: [],
+        patients: [],
+        applicableMeasures: []));
+  }
+
   setAssessmentModel(Assessment model) {
-    updateCognitiveStatus(model.cognitiveStatus);
-    updateMeasures(model.measures);
-    updatePatientName(model.patientName);
+    clearAssessmentModel();
+    emit(state.copyWith(
+      cognitiveStatus: model.cognitiveStatus,
+      measures: model.measures,
+      patientName: model.patientName,
+    ));
+  }
+
+  Future<void> fetchFirebaseData() async {
+    clearAssessmentModel();
+    try {
+      final cognitiveStatusesList = await repository.fetchCognitiveStatuses();
+      emit(state.copyWith(
+        cognitiveStatuses: cognitiveStatusesList,
+        applicableMeasures: [],
+        patients: [],
+      ));
+    } catch (error) {
+      print('Error fetching data from Firebase: $error');
+    }
+  }
+
+  fetchApplicableMeasures() async {
+    final firstCognitiveStatus = state.cognitiveStatuses.firstWhere(
+        (cognitiveStatus) => cognitiveStatus.name == state.cognitiveStatus);
+    final firstCognitiveStatusId =
+        state.cognitiveStatuses.isNotEmpty ? firstCognitiveStatus.id : null;
+    if (firstCognitiveStatusId != null) {
+      try {
+        final measuresList =
+            await repository.fetchApplicableMeasures(firstCognitiveStatusId);
+        emit(state.copyWith(
+          applicableMeasures: measuresList,
+          patientName: null,
+          patients: [],
+        ));
+      } catch (error) {
+        print('Error fetching applicable measures: $error');
+      }
+    }
+  }
+
+  fetchPatients() async {
+    final firstCognitiveStatus = state.applicableMeasures.firstWhere(
+        (cognitiveStatus) => cognitiveStatus.name == state.measures);
+    final firstMeasureId =
+        state.applicableMeasures.isNotEmpty ? firstCognitiveStatus.id : null;
+    if (firstMeasureId != null) {
+      try {
+        final patientsList = await repository.fetchPatients(firstMeasureId);
+        emit(state.copyWith(
+          patients: patientsList,
+        ));
+      } catch (error) {
+        print('Error fetching patients: $error');
+      }
+    }
   }
 
   void updateCognitiveStatus(String? status) {
-    emit(state.copyWith(cognitiveStatus: status!));
+    emit(state.copyWith(
+      cognitiveStatus: status!,
+      applicableMeasures: [],
+      patients: [],
+      measures: null,
+      patientName: null,
+    ));
+    fetchApplicableMeasures();
   }
 
   void updateMeasures(String? measures) {
     emit(state.copyWith(measures: measures!));
+    fetchPatients();
   }
 
   void updatePatientName(String? name) {
@@ -34,9 +108,9 @@ class AssessmentCubit extends Cubit<AssessmentState> {
   }
 
   bool get isButtonEnabled {
-    return state.cognitiveStatus.isNotEmpty == true &&
-        state.measures.isNotEmpty == true &&
-        state.patientName.isNotEmpty == true;
+    return !(state.cognitiveStatus != null &&
+        state.measures != null &&
+        state.patientName != null);
   }
 
   fetchRecentAssessment() async {
@@ -59,87 +133,4 @@ class AssessmentCubit extends Cubit<AssessmentState> {
       print('Failed to fetch questions: $error');
     }
   }
-
-  fetchAssessments() async {
-    try {
-      final querySnapshot = await FirebaseFirestore.instance
-          .collection('recent_assessments')
-          .get();
-      final recentAssessments = querySnapshot.docs.map((doc) {
-        final data = doc.data();
-        return Assessment(
-          cognitiveStatus: data['cognitiveStatus'],
-          measures: data['measures'],
-          patientName: data['patientName'],
-        );
-      }).toList();
-      emit(state.copyWith(
-        recentAssessments: recentAssessments,
-      ));
-    } catch (error) {
-      print('Failed to fetch questions: $error');
-    }
-  }
-
-  fetchCognitiveStatus() async {
-    try {
-      final querySnapshot =
-          await FirebaseFirestore.instance.collection('cognitive_status').get();
-      final cognitiveStatuses = querySnapshot.docs.map((doc) {
-        final data = doc.data();
-        return CognitiveStatus(id: data['id'], name: data['name']);
-      }).toList();
-      emit(state.copyWith(
-        cognitiveStatuses: cognitiveStatuses,
-      ));
-    } catch (error) {
-      print('Failed to fetch questions: $error');
-    }
-  }
-
-  fetchApplicableMeasures() async {
-    try {
-      final querySnapshot = await FirebaseFirestore.instance
-          .collection('applicable_measures')
-          .get();
-      final applicableMeasures = querySnapshot.docs.map((doc) {
-        final data = doc.data();
-        return ApplicableMeasures(
-            id: data['id'],
-            name: data['name'],
-            cognitiveStatusId: data['cognitiveStatusId']);
-      }).toList();
-      emit(state.copyWith(
-        applicableMeasures: applicableMeasures,
-      ));
-    } catch (error) {
-      print('Failed to fetch questions: $error');
-    }
-  }
-
- fetchPatient() async {
-    try {
-      final querySnapshot = await FirebaseFirestore.instance
-          .collection('patients')
-          .get();
-      final patients = querySnapshot.docs.map((doc) {
-        final data = doc.data();
-        return Patient(
-            id: data['id'],
-            name: data['name'],
-            applicableMeasureId: data['applicableMeasureId'],
-            address: data['address'],
-            age: data['age'],
-            phoneNumber: data['phoneNumber'],
-            gender: data['gender']
-            );
-      }).toList();
-      emit(state.copyWith(
-        patients: patients,
-      ));
-    } catch (error) {
-      print('Failed to fetch questions: $error');
-    }
-  }
-
 }

@@ -64,7 +64,7 @@ class AssessmentsCard extends StatelessWidget {
                     width: 8,
                   ),
                   Text(
-                    "Physical Examination",
+                      recentAssessment.measures,
                     style: getMediumtyle(
                         color: AppColors.assessmentCardTitleColor,
                         fontSize: 14),
@@ -76,7 +76,7 @@ class AssessmentsCard extends StatelessWidget {
           Flexible(
             flex: 1,
             child: GestureDetector(
-                onTap: () => onTap,
+                onTap: onTap,
                 child: SvgPicture.asset(
                   IconsManager.nextButton,
                   colorFilter: ColorFilter.mode(

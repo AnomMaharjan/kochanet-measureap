@@ -5,15 +5,17 @@ import '../../../core/theme/app_colors.dart';
 class MultipleCorrectIncorrectOption extends StatelessWidget {
   final String answer;
   final bool isSelected;
+  final VoidCallback onSelect;
   const MultipleCorrectIncorrectOption({
     super.key,
     required this.answer,
     this.isSelected = false,
+    required this.onSelect,
   });
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return GestureDetector(onTap: onSelect, child:  Container(
       width: double.infinity,
       height: 70,
       padding: const EdgeInsets.symmetric(horizontal: 16),
@@ -29,36 +31,36 @@ class MultipleCorrectIncorrectOption extends StatelessWidget {
         child: Row(children: [
           isSelected
               ? Container(
-                  width: 30,
-                  height: 30,
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    color: AppColors.assessmentCardBackgroundColor,
-                  ),
-                  child: const Center(
-                    child: Icon(
-                      Icons.check,
-                      color: AppColors.whiteColor,
-                    ),
-                  ),
-                )
+            width: 30,
+            height: 30,
+            decoration: BoxDecoration(
+              shape: BoxShape.circle,
+              color: AppColors.assessmentCardBackgroundColor,
+            ),
+            child: const Center(
+              child: Icon(
+                Icons.check,
+                color: AppColors.whiteColor,
+              ),
+            ),
+          )
               : Container(
-                  width: 30,
-                  height: 30,
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    border: Border.all(
-                      color: AppColors.disabledColor,
-                      width: 2,
-                    ),
-                  ),
-                ),
+            width: 30,
+            height: 30,
+            decoration: BoxDecoration(
+              shape: BoxShape.circle,
+              border: Border.all(
+                color: AppColors.disabledColor,
+                width: 2,
+              ),
+            ),
+          ),
           const SizedBox(
             width: 8,
           ),
           AnswerTextWidget(title: answer)
         ]),
       ),
-    );
+    ),);
   }
 }

@@ -4,26 +4,21 @@ import 'package:flutter_svg/svg.dart';
 import 'package:measureap/core/extensions/string_extension.dart';
 import 'package:measureap/questionaire/presentation/enums/question_type_enums.dart';
 import 'package:measureap/questionaire/presentation/screens/result_screen.dart';
-import 'package:measureap/questionaire/presentation/screens/results_screen.dart';
 import 'package:measureap/questionaire/presentation/widgets/correct_incorrect_pageview.dart';
-import 'package:measureap/questionaire/presentation/widgets/correct_incorrect_option_card.dart';
 import 'package:measureap/questionaire/presentation/widgets/identification_question_pageview.dart';
-import 'package:measureap/questionaire/presentation/widgets/multiple_correct_incorrect_option.dart';
+import 'package:measureap/questionaire/presentation/widgets/loader_pageview.dart';
 import 'package:measureap/questionaire/presentation/widgets/multiple_correct_incorrect_pageview.dart';
 import 'package:measureap/questionaire/presentation/widgets/pageview_indicator.dart';
 import 'package:measureap/questionaire/domain/entity/question.dart';
 import 'package:measureap/questionaire/presentation/questionnaire_bloc.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:measureap/questionaire/presentation/widgets/recall_question_pageview.dart';
 import '../../../../core/constants/icons_manager.dart';
 import '../../../../core/constants/string_constants.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/styles_manager.dart';
-import '../../../core/firebase/firebase_service.dart';
+import '../../../core/widgets/exit_assessment_dialog.dart';
 import '../../../core/widgets/gaps.dart';
-import '../enums/question_type_enums.dart';
 import '../widgets/questionnaire_buttons.dart';
-import '../widgets/questionnaire_text_widgets.dart';
 
 class QuestionnaireScreen extends StatelessWidget {
   const QuestionnaireScreen({super.key});
@@ -36,7 +31,12 @@ class QuestionnaireScreen extends StatelessWidget {
         centerTitle: true,
         leading: GestureDetector(
             onTap: () {
-              Navigator.pop(context);
+              showDialog(
+                context: context,
+                builder: (BuildContext context) {
+                  return const ExitAssessmentDialog();
+                },
+              );
             },
             child: const Icon(Icons.arrow_back_ios)),
         title: Text(
@@ -47,17 +47,27 @@ class QuestionnaireScreen extends StatelessWidget {
           GestureDetector(
             onTap: () {},
             child: SvgPicture.asset(IconsManager.more),
-          )
-        ],
-      ),
-      body: const Column(
-        children: [
-          Expanded(child: QuestionnairePageView()),
-          Padding(
-            padding: EdgeInsets.symmetric(horizontal: 10.0, vertical: 30),
-            child: QuestionnaireButtons(),
           ),
         ],
+      ),
+      body: BlocBuilder<QuestionnaireBloc, QuestionnaireState>(
+        builder: (context, state) {
+          switch (state.isLoading) {
+            case true:
+              return const CustomLoader();
+            case false:
+              return const Column(
+                children: [
+                  Expanded(child: QuestionnairePageView()),
+                  Padding(
+                    padding:
+                        EdgeInsets.symmetric(horizontal: 10.0, vertical: 30),
+                    child: QuestionnaireButtons(),
+                  ),
+                ],
+              );
+          }
+        },
       ),
       // const CustomLoader(),
     );

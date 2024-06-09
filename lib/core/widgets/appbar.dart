@@ -4,6 +4,8 @@ import 'package:measureap/core/constants/string_constants.dart';
 import 'package:measureap/core/theme/app_colors.dart';
 import 'package:measureap/core/theme/styles_manager.dart';
 
+import '../utils/date_time_utils.dart';
+
 class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   const CustomAppBar({super.key});
 
@@ -59,9 +61,10 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
             crossAxisAlignment: CrossAxisAlignment.end,
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
-              const Text("Monday"),
               Text(
-                "16 June, 2024",
+                  DateTimeUtils.formattedDate(DateTime.now()).split(', ').first),
+              Text(
+                DateTimeUtils.formattedDate(DateTime.now()).split(', ').last,
                 style:
                     getBoldStyle(color: AppColors.titleTextColor, fontSize: 16),
               )
