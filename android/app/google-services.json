@@ -1,0 +1,30 @@
+{
+  "project_info": {
+    "project_number": "429098190912",
+    "firebase_url": "https://measureap-f68dd-default-rtdb.asia-southeast1.firebasedatabase.app",
+    "project_id": "measureap-f68dd",
+    "storage_bucket": "measureap-f68dd.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:429098190912:android:f5be689b9b2b1247e437a5",
+        "android_client_info": {
+          "package_name": "com.kocahnet.measureap"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCRoQOzNBIrT5X7uXd9cjTZc8MhNlRUYXM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
