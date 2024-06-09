@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:measureap/core/extensions/string_extension.dart';
 import 'package:measureap/core/theme/app_colors.dart';
 import 'package:measureap/core/theme/styles_manager.dart';
-import 'package:measureap/questionaire/presentation/enums/question_type_enums.dart';
-import 'package:measureap/questionaire/presentation/widgets/text_overlay_widget.dart';
+import 'package:measureap/feature/questionaire/presentation/enums/question_type_enums.dart';
+import 'package:measureap/feature/questionaire/presentation/widgets/text_overlay_widget.dart';
 
 class TitleTextWidget extends StatelessWidget {
   final String title;

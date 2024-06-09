@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:measureap/questionaire/presentation/widgets/identification_question_option_card.dart';
-import 'package:measureap/questionaire/presentation/widgets/questionnaire_text_widgets.dart';
+import 'package:measureap/feature/questionaire/presentation/widgets/identification_question_option_card.dart';
+import 'package:measureap/feature/questionaire/presentation/widgets/questionnaire_text_widgets.dart';
 
-import '../../../core/widgets/gaps.dart';
+import '../../../../core/widgets/gaps.dart';
 import '../../domain/entity/question.dart';
 
 class IdentificationQuestionPageview extends StatelessWidget {

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:measureap/core/theme/app_colors.dart';
-import 'package:measureap/questionaire/presentation/widgets/questionnaire_text_widgets.dart';
+import 'package:measureap/feature/questionaire/presentation/widgets/questionnaire_text_widgets.dart';
 
 class CorrectIncorrectOption extends StatelessWidget {
   final String answer;

@@ -7,15 +7,17 @@ import '../../feature/assessments/domain/entity/patient_entity.dart';
 class FirestoreService {
   final FirebaseFirestore _db = FirebaseFirestore.instance;
 
-  Future<void> saveAllUserAnswers(String userId, List<Map<String, dynamic>> answers) async {
+  Future<void> saveAllUserAnswers(
+      String userId, List<Map<String, dynamic>> answers) async {
     final userDoc = _db.collection('recent_answers').doc(userId);
 
     // Convert the list of answers to a format Firestore understands
-    List<Map<String, dynamic>> formattedAnswers = answers.map((answer) => {
-      'questionIndex': answer['questionIndex'],
-      'status': answer['status'],
-      'selectedOptions': answer['selectedOptions'],
-    }).toList();
+    List<Map<String, dynamic>> formattedAnswers = answers
+        .map((answer) => {
+              'questionIndex': answer['questionIndex'],
+              'status': answer['status'],
+            })
+        .toList();
 
     await userDoc.set({FirebaseConstants.answersField: formattedAnswers});
   }

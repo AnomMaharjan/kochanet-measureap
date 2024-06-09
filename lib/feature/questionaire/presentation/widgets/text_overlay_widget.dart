@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:measureap/questionaire/presentation/widgets/questionnaire_text_widgets.dart';
+import 'package:measureap/feature/questionaire/presentation/widgets/questionnaire_text_widgets.dart';
 
-import '../../../core/theme/app_colors.dart';
+import '../../../../core/theme/app_colors.dart';
 import '../enums/question_type_enums.dart';
 
 Future<dynamic> showTextOverlayWidget(BuildContext context, String content) {

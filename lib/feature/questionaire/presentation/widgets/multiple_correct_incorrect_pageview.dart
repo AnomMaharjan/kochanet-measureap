@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:measureap/questionaire/presentation/widgets/multiple_correct_incorrect_option.dart';
-import 'package:measureap/questionaire/presentation/widgets/questionnaire_text_widgets.dart';
+import 'package:measureap/feature/questionaire/presentation/widgets/multiple_correct_incorrect_option.dart';
+import 'package:measureap/feature/questionaire/presentation/widgets/questionnaire_text_widgets.dart';
 
-import '../../../core/widgets/gaps.dart';
+import '../../../../core/widgets/gaps.dart';
 import '../../domain/entity/question.dart';
 import '../questionnaire_bloc.dart';
 

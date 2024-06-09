@@ -2,10 +2,10 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:measureap/core/theme/app_colors.dart';
-import 'package:measureap/questionaire/presentation/widgets/image_overlay_widget.dart';
-import 'package:measureap/questionaire/presentation/widgets/questionnaire_text_widgets.dart';
+import 'package:measureap/feature/questionaire/presentation/widgets/image_overlay_widget.dart';
+import 'package:measureap/feature/questionaire/presentation/widgets/questionnaire_text_widgets.dart';
 
-import '../../../core/widgets/gaps.dart';
+import '../../../../core/widgets/gaps.dart';
 import '../questionnaire_bloc.dart';
 
 class CustomSwitch extends StatelessWidget {

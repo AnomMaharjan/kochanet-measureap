@@ -1,7 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import '../../core/firebase/firebase_service.dart';
+import '../../../core/firebase/firebase_service.dart';
 import '../domain/entity/question.dart';
 
 part 'questionnaire_event.dart';
@@ -58,7 +58,10 @@ class QuestionnaireBloc extends Bloc<QuestionnaireEvent, QuestionnaireState> {
   Future<void> _onAnswerQuestion(
       AnswerQuestion event, Emitter<QuestionnaireState> emit) async {
     final updatedAnswers = List<Map<String, dynamic>>.from(state.userAnswers!);
-    final isCorrect =state.questions[event.questionIndex].correctOption == null? true: state.questions[event.questionIndex].correctOption!.contains(event.selectedOption);
+    final isCorrect = state.questions[event.questionIndex].correctOption == null
+        ? true
+        : state.questions[event.questionIndex].correctOption!
+            .contains(event.selectedOption);
     final status = isCorrect ? "correct" : "incorrect";
 
     updatedAnswers[event.questionIndex] = {
@@ -66,9 +69,9 @@ class QuestionnaireBloc extends Bloc<QuestionnaireEvent, QuestionnaireState> {
       "selectedOptions": event.selectedOption,
       "status": status,
     };
-   
+
     if (state.currentPage == state.questions.length - 1) {
-      await _firestoreService.saveAllUserAnswers('John', updatedAnswers);
+      await _firestoreService.saveAllUserAnswers('Cognitive', updatedAnswers);
     }
 
     emit(state.copyWith(userAnswers: updatedAnswers));
