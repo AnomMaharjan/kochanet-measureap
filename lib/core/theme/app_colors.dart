@@ -18,4 +18,5 @@ class AppColors {
   static Color percentIndicatorColor = HexColor.fromHex("#44D1BB");
   static Color correctAnswerColor = HexColor.fromHex("#0C9A55");
   static Color incorrectAnswerColor = HexColor.fromHex("#9A0C0C");
+  static Color greyColor = HexColor.fromHex("#BBBBBB");
 }

@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:measureap/questionaire/domain/entity/question.dart';
 import 'package:measureap/questionaire/presentation/widgets/correct_incorrect_option_card.dart';
 import 'package:measureap/questionaire/presentation/widgets/questionnaire_text_widgets.dart';
 
 import '../../../core/widgets/gaps.dart';
+import '../questionnaire_bloc.dart';
 
 class CorrectIncorrectPageview extends StatefulWidget {
   final Question question;
 
-  const CorrectIncorrectPageview({
-    super.key,
-   required this.question
-  });
+  const CorrectIncorrectPageview({Key? key, required this.question})
+      : super(key: key);
 
   @override
   State<CorrectIncorrectPageview> createState() =>
@@ -19,8 +19,25 @@ class CorrectIncorrectPageview extends StatefulWidget {
 }
 
 class _CorrectIncorrectPageviewState extends State<CorrectIncorrectPageview> {
-  
   final ValueNotifier<int?> _selectedOption = ValueNotifier<int?>(null);
+
+  @override
+  void initState() {
+    super.initState();
+    // Initialize selected options from the state if it exists
+    final userAnswers = context.read<QuestionnaireBloc>().state.userAnswers;
+    if (userAnswers != null &&
+        userAnswers.isNotEmpty &&
+        userAnswers[context.read<QuestionnaireBloc>().state.currentPage]
+            .isNotEmpty) {
+      final selectedOptions =
+          userAnswers[context.read<QuestionnaireBloc>().state.currentPage]
+              ['selectedOptions'] as List<int>?;
+      if (selectedOptions != null && selectedOptions.isNotEmpty) {
+        _selectedOption.value = selectedOptions.first;
+      }
+    }
+  }
 
   @override
   void dispose() {
@@ -43,23 +60,33 @@ class _CorrectIncorrectPageviewState extends State<CorrectIncorrectPageview> {
           textAlign: TextAlign.center,
         ),
         const LargeGap(),
-        ValueListenableBuilder<int?>(
-          valueListenable: _selectedOption,
-          builder: (context, selectedIndex, _) => ListView.builder(
-            shrinkWrap: true,
-            itemBuilder: (ctx, index) => Padding(
-              padding: const EdgeInsets.only(bottom: 20.0),
-              child: CorrectIncorrectOption(
-                answer: options[index],
-                onSelect: () {
-                  _selectedOption.value =
-                      _selectedOption.value == index ? -1 : index;
+        BlocBuilder<QuestionnaireBloc, QuestionnaireState>(
+          builder: (context, state) {
+            final cubit = context.read<QuestionnaireBloc>();
+            return ListView.builder(
+              shrinkWrap: true,
+              itemBuilder: (ctx, index) => ValueListenableBuilder<int?>(
+                valueListenable: _selectedOption,
+                builder: (context, selectedValue, _) {
+                  return Padding(
+                    padding: const EdgeInsets.only(bottom: 20.0),
+                    child: CorrectIncorrectOption(
+                      answer: options[index],
+                      onSelect: () {
+                        _selectedOption.value = index; // Update selected option
+                        cubit.add(AnswerQuestion(
+                            context.read<QuestionnaireBloc>().state.currentPage,
+                            [index])); // Pass selected option index to the bloc
+                      },
+                      isSelected: selectedValue ==
+                          index, // Check if current option is selected
+                    ),
+                  );
                 },
-                isSelected: selectedIndex == index,
               ),
-            ),
-            itemCount: options.length,
-          ),
+              itemCount: options.length,
+            );
+          },
         ),
       ],
     );

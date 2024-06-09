@@ -31,7 +31,7 @@ class PrimaryButton extends StatelessWidget {
             padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 0),
             disabledColor: Colors.grey,
             color: Colors.grey,
-            onPressed: onPressed,
+            onPressed: (){},
             child: Row(
               mainAxisSize: MainAxisSize.min,
               children: [

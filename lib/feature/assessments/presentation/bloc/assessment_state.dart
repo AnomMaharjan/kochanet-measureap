@@ -9,8 +9,8 @@ class AssessmentState with _$AssessmentState {
     @Default([]) List<ApplicableMeasures> applicableMeasures,
     @Default([]) List<CognitiveStatus> cognitiveStatuses,
     @Default([]) List<Patient> patients,
-    @Default('') String cognitiveStatus,
-    @Default('') String measures,
-    @Default('') String patientName,
+    String? cognitiveStatus,
+     String? measures,
+    String? patientName,
   }) = _AssessmentState;
 }

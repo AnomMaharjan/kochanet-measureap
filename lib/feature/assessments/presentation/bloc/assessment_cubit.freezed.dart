@@ -22,9 +22,9 @@ mixin _$AssessmentState {
   List<CognitiveStatus> get cognitiveStatuses =>
       throw _privateConstructorUsedError;
   List<Patient> get patients => throw _privateConstructorUsedError;
-  String get cognitiveStatus => throw _privateConstructorUsedError;
-  String get measures => throw _privateConstructorUsedError;
-  String get patientName => throw _privateConstructorUsedError;
+  String? get cognitiveStatus => throw _privateConstructorUsedError;
+  String? get measures => throw _privateConstructorUsedError;
+  String? get patientName => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $AssessmentStateCopyWith<AssessmentState> get copyWith =>
@@ -42,9 +42,9 @@ abstract class $AssessmentStateCopyWith<$Res> {
       List<ApplicableMeasures> applicableMeasures,
       List<CognitiveStatus> cognitiveStatuses,
       List<Patient> patients,
-      String cognitiveStatus,
-      String measures,
-      String patientName});
+      String? cognitiveStatus,
+      String? measures,
+      String? patientName});
 }
 
 /// @nodoc
@@ -64,9 +64,9 @@ class _$AssessmentStateCopyWithImpl<$Res, $Val extends AssessmentState>
     Object? applicableMeasures = null,
     Object? cognitiveStatuses = null,
     Object? patients = null,
-    Object? cognitiveStatus = null,
-    Object? measures = null,
-    Object? patientName = null,
+    Object? cognitiveStatus = freezed,
+    Object? measures = freezed,
+    Object? patientName = freezed,
   }) {
     return _then(_value.copyWith(
       recentAssessments: null == recentAssessments
@@ -85,18 +85,18 @@ class _$AssessmentStateCopyWithImpl<$Res, $Val extends AssessmentState>
           ? _value.patients
           : patients // ignore: cast_nullable_to_non_nullable
               as List<Patient>,
-      cognitiveStatus: null == cognitiveStatus
+      cognitiveStatus: freezed == cognitiveStatus
           ? _value.cognitiveStatus
           : cognitiveStatus // ignore: cast_nullable_to_non_nullable
-              as String,
-      measures: null == measures
+              as String?,
+      measures: freezed == measures
           ? _value.measures
           : measures // ignore: cast_nullable_to_non_nullable
-              as String,
-      patientName: null == patientName
+              as String?,
+      patientName: freezed == patientName
           ? _value.patientName
           : patientName // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
     ) as $Val);
   }
 }
@@ -114,9 +114,9 @@ abstract class _$$AssessmentStateImplCopyWith<$Res>
       List<ApplicableMeasures> applicableMeasures,
       List<CognitiveStatus> cognitiveStatuses,
       List<Patient> patients,
-      String cognitiveStatus,
-      String measures,
-      String patientName});
+      String? cognitiveStatus,
+      String? measures,
+      String? patientName});
 }
 
 /// @nodoc
@@ -134,9 +134,9 @@ class __$$AssessmentStateImplCopyWithImpl<$Res>
     Object? applicableMeasures = null,
     Object? cognitiveStatuses = null,
     Object? patients = null,
-    Object? cognitiveStatus = null,
-    Object? measures = null,
-    Object? patientName = null,
+    Object? cognitiveStatus = freezed,
+    Object? measures = freezed,
+    Object? patientName = freezed,
   }) {
     return _then(_$AssessmentStateImpl(
       recentAssessments: null == recentAssessments
@@ -155,18 +155,18 @@ class __$$AssessmentStateImplCopyWithImpl<$Res>
           ? _value._patients
           : patients // ignore: cast_nullable_to_non_nullable
               as List<Patient>,
-      cognitiveStatus: null == cognitiveStatus
+      cognitiveStatus: freezed == cognitiveStatus
           ? _value.cognitiveStatus
           : cognitiveStatus // ignore: cast_nullable_to_non_nullable
-              as String,
-      measures: null == measures
+              as String?,
+      measures: freezed == measures
           ? _value.measures
           : measures // ignore: cast_nullable_to_non_nullable
-              as String,
-      patientName: null == patientName
+              as String?,
+      patientName: freezed == patientName
           ? _value.patientName
           : patientName // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
     ));
   }
 }
@@ -179,9 +179,9 @@ class _$AssessmentStateImpl extends _AssessmentState {
       final List<ApplicableMeasures> applicableMeasures = const [],
       final List<CognitiveStatus> cognitiveStatuses = const [],
       final List<Patient> patients = const [],
-      this.cognitiveStatus = '',
-      this.measures = '',
-      this.patientName = ''})
+      this.cognitiveStatus,
+      this.measures,
+      this.patientName})
       : _recentAssessments = recentAssessments,
         _applicableMeasures = applicableMeasures,
         _cognitiveStatuses = cognitiveStatuses,
@@ -228,14 +228,11 @@ class _$AssessmentStateImpl extends _AssessmentState {
   }
 
   @override
-  @JsonKey()
-  final String cognitiveStatus;
+  final String? cognitiveStatus;
   @override
-  @JsonKey()
-  final String measures;
+  final String? measures;
   @override
-  @JsonKey()
-  final String patientName;
+  final String? patientName;
 
   @override
   String toString() {
@@ -287,9 +284,9 @@ abstract class _AssessmentState extends AssessmentState {
       final List<ApplicableMeasures> applicableMeasures,
       final List<CognitiveStatus> cognitiveStatuses,
       final List<Patient> patients,
-      final String cognitiveStatus,
-      final String measures,
-      final String patientName}) = _$AssessmentStateImpl;
+      final String? cognitiveStatus,
+      final String? measures,
+      final String? patientName}) = _$AssessmentStateImpl;
   const _AssessmentState._() : super._();
 
   @override
@@ -301,11 +298,11 @@ abstract class _AssessmentState extends AssessmentState {
   @override
   List<Patient> get patients;
   @override
-  String get cognitiveStatus;
+  String? get cognitiveStatus;
   @override
-  String get measures;
+  String? get measures;
   @override
-  String get patientName;
+  String? get patientName;
   @override
   @JsonKey(ignore: true)
   _$$AssessmentStateImplCopyWith<_$AssessmentStateImpl> get copyWith =>

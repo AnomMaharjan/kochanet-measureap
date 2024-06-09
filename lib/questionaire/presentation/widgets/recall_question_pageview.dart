@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:measureap/questionaire/presentation/enums/question_type_enums.dart';
 import 'package:measureap/questionaire/presentation/widgets/questionnaire_text_widgets.dart';
 
 class RecallQuestionPageview extends StatelessWidget {
@@ -12,7 +13,10 @@ class RecallQuestionPageview extends StatelessWidget {
       padding: EdgeInsets.symmetric(horizontal: 10.0),
       child: Column(
         children: [
-          DescriptionTextWidget(description: "Recall question:"),
+          DescriptionTextWidget(
+            description: "Recall question:",
+            questionType: QuestionType.recall,
+          ),
           SizedBox(
             height: 30,
           ),
@@ -20,7 +24,10 @@ class RecallQuestionPageview extends StatelessWidget {
           SizedBox(
             height: 30,
           ),
-          DescriptionTextWidget(description: description),
+          DescriptionTextWidget(
+            description: description,
+            questionType: QuestionType.recall,
+          ),
         ],
       ),
     );

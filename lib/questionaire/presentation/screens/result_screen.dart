@@ -57,8 +57,8 @@ class _ResultScreenState extends State<ResultScreen> {
                       width: 135,
                       child: CustomPercentIndicator(
                         percent: percent,
-                        totalCorrectAnswers: totalCorrectAnswers,
-                        totalQuestions: totalQuestions,
+                        totalCorrectAnswers: totalCorrectAnswers * 3,
+                        totalQuestions: totalQuestions * 3,
                         progressColor: AppColors.percentIndicatorColor,
                         backgroundColor: Colors.grey.shade300,
                         centerTextStyle:
@@ -79,7 +79,7 @@ class _ResultScreenState extends State<ResultScreen> {
                 }
                 final displayResults = _showAll
                     ? state.userAnswers!
-                    : state.userAnswers!.take(3).toList();
+                    : state.userAnswers!.take(2).toList();
                 return ListView.builder(
                   itemBuilder: (ctx, index) {
                     if (index == displayResults.length) {
@@ -91,6 +91,7 @@ class _ResultScreenState extends State<ResultScreen> {
                         },
                         child: const Text(
                           'Show all',
+                          textAlign: TextAlign.left,
                           style: TextStyle(color: Colors.orange),
                         ),
                       );
@@ -106,7 +107,7 @@ class _ResultScreenState extends State<ResultScreen> {
                   //comment
                   //show all option
                   itemCount: displayResults.length +
-                      (state.userAnswers!.length > 3 && !_showAll ? 1 : 0),
+                      (state.userAnswers!.length > 2 && !_showAll ? 1 : 0),
                   shrinkWrap: true,
                 );
               },

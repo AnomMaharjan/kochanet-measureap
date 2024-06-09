@@ -29,7 +29,7 @@ class HomeScreen extends StatelessWidget {
           const LargeGap(),
           PrimaryButton(
               onPressed: () {
-                Navigator.pushNamed(context, AppRoutes.assessmentQuestionaire);
+                Navigator.pushNamed(context, AppRoutes.newAssessment);
               },
               text: StringConstants.newAssessment),
           const MediumGap()

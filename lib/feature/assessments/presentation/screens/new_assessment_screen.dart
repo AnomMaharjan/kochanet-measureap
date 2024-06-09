@@ -21,40 +21,34 @@ class NewAssessmentScreen extends StatefulWidget {
 class _NewAssessmentScreenState extends State<NewAssessmentScreen> {
   @override
   void initState() {
-    // TODO: implement initState
-
-    //check from args
-    // if new => fetch from firebase,
-    // if not =>
-    print(widget.assessment);
+    super.initState();
     if (widget.assessment != null) {
       final cubit = context.read<AssessmentCubit>();
       cubit.setAssessmentModel(widget.assessment!);
-      //  cubit.fetchApplicableMeasures();
+    } else {
+      final cubit = context.read<AssessmentCubit>();
+      cubit.fetchFirebaseData();
     }
-    super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    List<String> cognitiveStatusList = ['a', 'b', 'c'];
-    List<String> applicableMeasureList = ['a', 'b', 'c'];
-    List<String> patientList = ['a', 'b', 'c'];
-
-    // String? selectedCognitiveStatus;
-    // String? selectedapplicableMeasure;
-    // String? selectedpatient;
     return Scaffold(
+      backgroundColor: AppColors.backgroundColor,
       appBar: AppBar(
         centerTitle: true,
         leading: GestureDetector(
-            onTap: () {
-              Navigator.pop(context);
-            },
-            child: const Icon(Icons.arrow_back_ios)),
+          onTap: () {
+            Navigator.pop(context);
+          },
+          child: const Icon(Icons.arrow_back_ios),
+        ),
         title: Text(
           StringConstants.newAssessment,
-          style: getBoldStyle(color: AppColors.titleTextColor, fontSize: 16),
+          style: getBoldStyle(
+            color: AppColors.titleTextColor,
+            fontSize: 16,
+          ),
         ),
       ),
       body: Padding(
@@ -73,15 +67,23 @@ class _NewAssessmentScreenState extends State<NewAssessmentScreen> {
                         Text(
                           StringConstants.cognitiveStatus,
                           style: getBoldStyle(
-                              color: AppColors.subtitleTextColor, fontSize: 14),
+                            color: AppColors.subtitleTextColor,
+                            fontSize: 14,
+                          ),
                         ),
                         const SizedBox(
                           height: 4,
                         ),
                         CustomDropDown(
-                          hintText: StringConstants.selectCognitiveStatus,
-                          options: cognitiveStatusList,
-                          selectedOption: cubit.state.cognitiveStatus,
+                          color: Colors.white,
+                          hintText: widget.assessment != null
+                              ? cubit.state.cognitiveStatus!
+                              : StringConstants.selectCognitiveStatus,
+                          options: state.cognitiveStatuses
+                              .map((status) => status.name)
+                              .toList(),
+                          selectedOption:
+                              cubit.state.cognitiveStatus, // Use null initially
                           onChanged: (val) {
                             cubit.updateCognitiveStatus(val);
                           },
@@ -97,14 +99,25 @@ class _NewAssessmentScreenState extends State<NewAssessmentScreen> {
                         Text(
                           StringConstants.applicableMeasures,
                           style: getBoldStyle(
-                              color: AppColors.subtitleTextColor, fontSize: 14),
+                            color: cubit.state.measures == null
+                                ? AppColors.greyColor
+                                : AppColors.subtitleTextColor,
+                            fontSize: 14,
+                          ),
                         ),
                         const SizedBox(
                           height: 4,
                         ),
                         CustomDropDown(
-                          hintText: StringConstants.selectApplicableMeasures,
-                          options: applicableMeasureList,
+                          color: cubit.state.measures == null
+                              ? AppColors.disabledColor
+                              : Colors.white,
+                          hintText: widget.assessment != null
+                              ? cubit.state.measures!
+                              : StringConstants.selectApplicableMeasures,
+                          options: state.applicableMeasures
+                              .map((measure) => measure.name)
+                              .toList(),
                           selectedOption: cubit.state.measures,
                           onChanged: (val) {
                             cubit.updateMeasures(val);
@@ -121,14 +134,26 @@ class _NewAssessmentScreenState extends State<NewAssessmentScreen> {
                         Text(
                           StringConstants.patient,
                           style: getBoldStyle(
-                              color: AppColors.subtitleTextColor, fontSize: 14),
+                            color: cubit.state.patientName == null
+                                ? AppColors.greyColor
+                                : AppColors.subtitleTextColor,
+                            fontSize: 14,
+                          ),
                         ),
                         const SizedBox(
                           height: 4,
                         ),
+                        //colors
                         CustomDropDown(
-                          hintText: StringConstants.enterPatient,
-                          options: patientList,
+                          color: cubit.state.patientName == null
+                              ? AppColors.disabledColor
+                              : Colors.white,
+                          hintText: widget.assessment != null
+                              ? cubit.state.patientName!
+                              : StringConstants.enterPatient,
+                          options: state.patients
+                              .map((patient) => patient.name)
+                              .toList(),
                           selectedOption: cubit.state.patientName,
                           onChanged: (val) {
                             cubit.updatePatientName(val);
@@ -147,12 +172,15 @@ class _NewAssessmentScreenState extends State<NewAssessmentScreen> {
                     return Padding(
                       padding: const EdgeInsets.only(bottom: 16.0),
                       child: PrimaryButton(
-                          isDisabled: cubit.isButtonEnabled,
-                          onPressed: () {
-                            Navigator.pushNamed(
-                                context, AppRoutes.assessmentQuestionaire);
-                          },
-                          text: StringConstants.startAssessment),
+                        isDisabled: cubit.isButtonEnabled,
+                        onPressed: () {
+                          Navigator.pushNamed(
+                            context,
+                            AppRoutes.assessmentQuestionaire,
+                          );
+                        },
+                        text: StringConstants.startAssessment,
+                      ),
                     );
                   },
                 ),

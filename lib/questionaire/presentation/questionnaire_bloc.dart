@@ -24,7 +24,7 @@ class QuestionnaireBloc extends Bloc<QuestionnaireEvent, QuestionnaireState> {
 
   Future<void> _onFetchQuestions(
       FetchQuestions event, Emitter<QuestionnaireState> emit) async {
-    // emit(state.copyWith(isLoading: true));
+    emit(state.copyWith(isLoading: true));
     try {
       final querySnapshot =
           await FirebaseFirestore.instance.collection('questions').get();
@@ -48,8 +48,9 @@ class QuestionnaireBloc extends Bloc<QuestionnaireEvent, QuestionnaireState> {
         questions: questions,
         userAnswers: List<Map<String, dynamic>>.filled(questions.length, {}),
       ));
+      emit(state.copyWith(isLoading: false));
     } catch (error) {
-      // emit(state.copyWith(isLoading: false));
+      emit(state.copyWith(isLoading: false));
       print('Failed to fetch questions: $error');
     }
   }
@@ -57,14 +58,15 @@ class QuestionnaireBloc extends Bloc<QuestionnaireEvent, QuestionnaireState> {
   Future<void> _onAnswerQuestion(
       AnswerQuestion event, Emitter<QuestionnaireState> emit) async {
     final updatedAnswers = List<Map<String, dynamic>>.from(state.userAnswers!);
-    final isCorrect = state.questions[event.questionIndex].correctOption ==
-        event.selectedOption;
+    final isCorrect =state.questions[event.questionIndex].correctOption == null? true: state.questions[event.questionIndex].correctOption!.contains(event.selectedOption);
     final status = isCorrect ? "correct" : "incorrect";
 
     updatedAnswers[event.questionIndex] = {
       "questionIndex": event.questionIndex,
+      "selectedOptions": event.selectedOption,
       "status": status,
     };
+   
     if (state.currentPage == state.questions.length - 1) {
       await _firestoreService.saveAllUserAnswers('John', updatedAnswers);
     }
